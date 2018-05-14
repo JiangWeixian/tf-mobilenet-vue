@@ -12,9 +12,6 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-console.log(ICON)
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   mode: 'development',
@@ -93,16 +90,16 @@ module.exports = {
         test: /\.styl$/,
         use: ['vue-style-loader',
           {loader: 'css-loader', options: {sourceMap: true}},
-          {loader: 'stylus-loader', options: {sourceMap: true}},
-          {loader: 'postcss-loader', options: {sourceMap: true}}
+          {loader: 'postcss-loader', options: {sourceMap: true}},
+          {loader: 'stylus-loader', options: {sourceMap: true}}
         ]
       },
       {
         test: /\.stylus$/,
         use: ['vue-style-loader',
           {loader: 'css-loader', options: {sourceMap: true}},
+          {loader: 'postcss-loader', options: {sourceMap: true}},
           {loader: 'stylus-loader', options: {sourceMap: true}},
-          {loader: 'postcss-loader', options: {sourceMap: true}}
         ]
       },
       {
@@ -159,7 +156,7 @@ module.exports = {
         notifier.notify({
           title: "TF-MOBILE-NET error",
           message: severity + ':' + error.name,
-          subtitle: error.file || '',
+          subtitle: error.file && error.file.split('!').pop() || '',
           icon: ICON
         })
       }
