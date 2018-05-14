@@ -4,11 +4,17 @@
     <meta charset="utf-8">
     <title>tf-vue</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
   </head>
   <body>
     <div id="app"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
+    <script>
+      window.onload = function () {
+        window.viewportUnitsBuggyfill.init({
+          hacks: window.viewportUnitsBuggyfillHacks
+        })
+      }
+    </script>
   </body>
 </html>

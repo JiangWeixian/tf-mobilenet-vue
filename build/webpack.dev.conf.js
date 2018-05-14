@@ -44,7 +44,11 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json']
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'components': resolve('src/components'),
+      'assets': resolve('src/assets')
+    }
   },
   module: {
     rules: [

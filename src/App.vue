@@ -1,9 +1,9 @@
 <template>
   <div class="app">
-    <img src="./assets/logo.png" alt="logo">
+    <router-view></router-view>
     <div class="panel control-panel">
-      <a class="btn-floating btn-large waves-effect waves-light white">
-        <i class="material-icons md-dark">play_arrow</i>
+      <a class="btn-floating btn-large waves-effect waves-dark white">
+        <i class="material-icons md-dark md-36">play_arrow</i>
       </a>
     </div>
   </div>
@@ -21,5 +21,5 @@
 </script>
 
 <style lang="stylus">
-  @import "assets/css/icons.styl"
+  @import "assets/css/global.styl"
 </style>
