@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <img src="./assets/logo.png" alt="logo">
-    Welcome Webpack
+    <i class="em em-cat em-48"></i>
   </div>
 </template>
 
@@ -23,5 +23,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+  .em.em-48 {
+    font-size: 48px;
   }
 </style>

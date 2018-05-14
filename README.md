@@ -11,8 +11,4 @@
 
 ## Start
 
-```bash
-npm install
-
-npm run dev
-```
+还在施工(Still on procesing)...
