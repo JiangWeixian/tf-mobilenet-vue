@@ -1,7 +1,11 @@
 <template>
   <div class="app">
     <img src="./assets/logo.png" alt="logo">
-    <i class="em em-cat em-48"></i>
+    <div class="panel control-panel">
+      <a class="btn-floating btn-large waves-effect waves-light white">
+        <i class="material-icons md-dark">play_arrow</i>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -16,15 +20,6 @@
   }
 </script>
 
-<style>
-  .app {
-    font-size: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .em.em-48 {
-    font-size: 48px;
-  }
+<style lang="stylus">
+  @import "assets/css/icons.styl"
 </style>

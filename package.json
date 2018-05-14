@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/JiangWeixian/tf-mobilenet-vue#readme",
   "dependencies": {
+    "@tensorflow-models/mobilenet": "0.0.1",
     "vue": "^2.5.16"
   },
   "devDependencies": {
