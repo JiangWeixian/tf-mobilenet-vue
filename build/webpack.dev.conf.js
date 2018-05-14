@@ -12,9 +12,6 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-console.log(ICON)
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   mode: 'development',
