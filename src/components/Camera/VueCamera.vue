@@ -1,6 +1,6 @@
 <template>
   <div class="vue-camera">
-    this is camera
+    <video></video>
   </div>
 </template>
 
@@ -10,6 +10,6 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="stylus" scoped>
+@import "VueCamera.styl"
 </style>
