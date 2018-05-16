@@ -28,11 +28,7 @@ mobil-net基于imagenet数据集训练得到。可以鉴别的类别可以达到
 
 该项目利用mobile-net良好的检查速度，调用webrtc，通过截取其中一帧，将其中一帧输入到网络实现检测。只选择可能性最高的一个。
 
-<img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/camera-example.gif" />
-
-### 测试图片
-
-<img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/shark-example.gif" />
+<img width="200" src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/camera-example.gif" /><img width="200" src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/shark-example.gif" />
 
 ## 相关
 
