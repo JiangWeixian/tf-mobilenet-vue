@@ -141,6 +141,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: 'index.html',
+      favicon: path.resolve(__dirname, '../static/img/tfmobile.ico'),
       inject: true
     }),
     new webpack.HotModuleReplacementPlugin(),
