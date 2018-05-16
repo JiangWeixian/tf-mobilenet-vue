@@ -25,6 +25,10 @@ npm install
 
 <img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/build-example.gif" />
 
+### 测试图片
+
+<img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/dev/docs/shark-example.gif" />
+
 ## 相关
 
 [tf-mobile-net](https://github.com/tensorflow/tfjs-models/tree/master/mobilenet)
