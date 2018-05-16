@@ -9,12 +9,6 @@ const VueCamera = (resolve) => {
   })
 }
 
-const MobileNet = (resolve) => {
-  import('components/Model/MobileNet').then((module) => {
-    resolve(module)
-  })
-}
-
 const Loading = (resolve) => {
   import('components/Loading/Loading').then((module) => {
     resolve(module)
@@ -25,20 +19,12 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/loading'
+      redirect: '/camera'
     },
     {
-      path: '/model',
-      name: 'MobileNet',
-      component: MobileNet,
-      redirect: '/camera',
-      children: [
-        {
-          path: '/camera',
-          name: 'VueCamera',
-          component: VueCamera
-        }
-      ]
+      path: '/camera',
+      name: 'VueCamera',
+      component: VueCamera
     },
     {
       path: '/loading',
