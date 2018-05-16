@@ -13,7 +13,7 @@
           :content="`我们找到了 ${msg}`"
           class="predict"></toast>
       </transition>
-      <a class="btn-play btn-floating btn-large waves-effect waves-dark white" @click="_record">
+      <a class="btn-play btn-floating btn-large waves-effect waves-dark" @click="_record">
         <i class="material-icons md-dark md-56">play_arrow</i>
       </a>
     </div>
@@ -69,6 +69,20 @@
         }
       }
     },
+    computed: {
+      isPc() {
+        let ua = navigator.userAgent,
+          isWindowsPhone = /(?:Windows Phone)/.test(ua),
+          isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+          isAndroid = /(?:Android)/.test(ua),
+          isFireFox = /(?:Firefox)/.test(ua),
+          isChrome = /(?:Chrome|CriOS)/.test(ua),
+          isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+          isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+          isPc = !isPhone && !isAndroid && !isSymbian && !isTablet;
+        return isPc
+      }
+    },
     mounted() {
       this.model = mobilenet.load().then(model => Promise.resolve(model))
       this.$nextTick(() => {
@@ -86,10 +100,23 @@
       },
       _getMedia() {
         if (navigator.getUserMedia) {
-          navigator.getUserMedia({
-            video: true,
-            audio: true
-          }, this._successCallback, this._errorCallback)
+          let ids = []
+          navigator.mediaDevices.enumerateDevices()
+            .then(function(devices) {
+              devices.forEach(function(device) {
+                if (device.kind === 'videoinput') {
+                  ids.push(device.deviceId)
+                }
+              });
+            })
+            .then(() => {
+              navigator.getUserMedia({
+                video: {
+                  deviceId: {exact: (this.isPc || ids.length == 1)? ids[0]:ids[1]}
+                },
+                audio: true
+              }, this._successCallback, this._errorCallback)
+            })
         }
         else {
           console.log('Native device media streaming (getUserMedia) not supported in this browser.');

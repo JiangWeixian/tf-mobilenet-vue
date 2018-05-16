@@ -141,6 +141,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: path.resolve(__dirname, '../dist/index.html'),
+      favicon: path.resolve(__dirname, '../dist/static/img/tfmobile.ico'),
       inject: true,
       minify: {
         removeComments: true,
