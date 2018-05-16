@@ -4,9 +4,9 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const notifier = require('node-notifier')
-const ICON = path.join(__dirname, 'logo.png')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -14,40 +14,40 @@ function resolve(dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  mode: 'development',
+  mode: 'production',
   entry: {
     main: './src/main.js'
   },
   output: {
-    path: path.join(__dirname, '../', 'dist'),
-    filename: '[name].js',
-    publicPath: '/'
-  },
-  devServer: {
-    clientLogLevel: 'warning',
-    historyApiFallback: {
-      rewrites: [
-        { from: /.*/, to: path.posix.join('/', 'index.html') },
-      ],
-    },
-    hot: true,
-    contentBase: false,
-    compress: true,
-    host: 'localhost',
-    port: 8080,
-    open: false,
-    quiet: true,
-    overlay: true,
-    publicPath: '/',
-    watchOptions: {
-      poll: false
-    }
+    path: path.join(__dirname, '../dist'),
+    filename: path.posix.join('static', 'js/[name].[chunkhash].js'),
+    chunkFilename: path.posix.join('static', 'js/[id].[chunkhash].js'),
+    publicPath: './'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'components': resolve('src/components'),
       'assets': resolve('src/assets')
+    }
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: "initial",
+          minChunks: 2,
+          maxInitialRequests: 5, // The default limit is too small to showcase the effect
+          minSize: 0 // This is example is too small to create commons chunks
+        },
+        vendor: {
+          test: /node_modules/,
+          chunks: "initial",
+          name: "vendor",
+          priority: 10,
+          enforce: true
+        }
+      }
     }
   },
   module: {
@@ -57,12 +57,12 @@ module.exports = {
         loader: "vue-loader",
         options: {
           loaders: {
-            css: ['vue-style-loader',
+            css: [ MiniCssExtractPlugin.loader,
               {loader: 'css-loader', options: {sourceMap: true}}],
-            stylus: ['vue-style-loader',
+            stylus: [ MiniCssExtractPlugin.loader,
               { loader: 'css-loader', options: {sourceMap: true}},
               { loader: 'stylus-loader', options: {sourceMap: true}}],
-            styl: ['vue-style-loader',
+            styl: [MiniCssExtractPlugin.loader,
               { loader: 'css-loader', options: {sourceMap: true}},
               { loader: 'stylus-loader', options: {sourceMap: true}}]
           },
@@ -78,21 +78,21 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['vue-style-loader',
+        use: [MiniCssExtractPlugin.loader,
           {loader: 'css-loader', options: {sourceMap: true}},
           {loader: 'postcss-loader', options: {sourceMap: true}}
         ]
       },
       {
         test: /\.postcss$/,
-        use: ['vue-style-loader',
+        use: [MiniCssExtractPlugin.loader,
           {loader: 'css-loader', options: {sourceMap: true}},
           {loader: 'postcss-loader', options: {sourceMap: true}}
         ]
       },
       {
         test: /\.styl$/,
-        use: ['vue-style-loader',
+        use: [MiniCssExtractPlugin.loader,
           {loader: 'css-loader', options: {sourceMap: true}},
           {loader: 'postcss-loader', options: {sourceMap: true}},
           {loader: 'stylus-loader', options: {sourceMap: true}}
@@ -100,7 +100,7 @@ module.exports = {
       },
       {
         test: /\.stylus$/,
-        use: ['vue-style-loader',
+        use: [MiniCssExtractPlugin.loader,
           {loader: 'css-loader', options: {sourceMap: true}},
           {loader: 'postcss-loader', options: {sourceMap: true}},
           {loader: 'stylus-loader', options: {sourceMap: true}},
@@ -140,30 +140,41 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
-      filename: 'index.html',
-      inject: true
+      filename: path.resolve(__dirname, '../dist/index.html'),
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      chunksSortMode: 'dependency'
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        },
+      },
+      sourceMap: true,
+      parallel: true
+    }),
+    new MiniCssExtractPlugin({
+      filename: path.posix.join('static', 'css/[name].[contenthash].css'),
+      allChunks: true
+    }),
+    new OptimizeCSSPlugin({
+      cssProcessorOptions: {safe: true, map: { inline: false }}
+    }),
+    new webpack.HashedModuleIdsPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(true)
+    }),
     new CopyWebpackPlugin([{
       from: path.join(__dirname, '../static'),
       to: 'static',
       ignore: ['.*']
     }]),
-    new VueLoaderPlugin(),
-    new FriendlyErrorsPlugin({
-      onErrors: (severity, errors) => {
-        if (severity  !== 'error') {
-          return;
-        }
-        const error = errors[0]
-        notifier.notify({
-          title: "TF-MOBILE-NET error",
-          message: severity + ':' + error.name,
-          subtitle: error.file && error.file.split('!').pop() || '',
-          icon: ICON
-        })
-      }
-    })
+    new VueLoaderPlugin()
   ]
 }
