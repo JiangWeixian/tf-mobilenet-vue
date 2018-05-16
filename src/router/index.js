@@ -19,7 +19,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/camera'
+      redirect: '/loading'
     },
     {
       path: '/camera',
