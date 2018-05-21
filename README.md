@@ -1,8 +1,8 @@
 
 
-<img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/webpack-stage-young/build/logo.png" style="width: 50px"/>
+<img src="https://raw.githubusercontent.com/JiangWeixian/tf-mobilenet-vue/webpack-stage-young/build/logo.png" style="width: 50px; height: 50px"/>
 
-[![forthebadge](https://img.shields.io/badge/MAKE%20WITH-TENSORFLOW.JS-orange.svg)](https://js.tensorflow.org/)
+[![forthebadge](https://img.shields.io/badge/MAKE%20WITH-TENSORFLOW.JS-orange.svg?style=flat-square)](https://js.tensorflow.org/)
 [![forthebadge](https://img.shields.io/badge/POWERED%20BY-VUE-green.svg?style=flat-square)](https://github.com/vuejs/vue)
 
 
